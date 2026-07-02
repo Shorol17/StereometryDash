@@ -1,6 +1,3 @@
-using JetBrains.Annotations;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -11,7 +8,9 @@ public class CameraController : MonoBehaviour
     public float heigh = 3f;
     public float rotatespeed = 300f;
     public bool FPW;
-    public bool InventoryOpened;
+    public InventoryMenuController inventoryMenu;
+    public ItemSpawnerMenu itemSpawnerMenu;
+    public ObjectSpawnerMenu objectSpawnerMenu;
     public GameObject[] FPWs;
 
     private float anglex;
@@ -31,7 +30,7 @@ public class CameraController : MonoBehaviour
         if (target == null) return;
         if (FPW)
         {
-            if (!InventoryOpened){
+            if (!inventoryMenu.InventoryOpened && !itemSpawnerMenu.MenuOpened && !objectSpawnerMenu.MenuOpened){
             anglex += Input.GetAxis("Mouse X") * rotatespeed * Time.deltaTime;
             angley += Input.GetAxis("Mouse Y") * rotatespeed * Time.deltaTime;
             }
@@ -53,10 +52,10 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-            if (!InventoryOpened){
-            anglex += Input.GetAxis("Mouse X") * rotatespeed * Time.deltaTime;
-            angley += Input.GetAxis("Mouse Y") * rotatespeed * Time.deltaTime;
-            }
+                if (!inventoryMenu.InventoryOpened && !itemSpawnerMenu.MenuOpened && !objectSpawnerMenu.MenuOpened){
+                    anglex += Input.GetAxis("Mouse X") * rotatespeed * Time.deltaTime;
+                    angley += Input.GetAxis("Mouse Y") * rotatespeed * Time.deltaTime;
+                }
                 Vector3 offset = Quaternion.Euler(angley, anglex, 0f) * new Vector3(0f, heigh, distance);
                 transform.position = target.position + offset;
                 transform.LookAt(target.position);
@@ -65,8 +64,10 @@ public class CameraController : MonoBehaviour
         }
 
         float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
-        distance -= 8 * scroll;
-        heigh -= 3 * scroll;
+        if (!inventoryMenu.InventoryOpened && !itemSpawnerMenu.MenuOpened && !objectSpawnerMenu.MenuOpened){
+            distance -= 8 * scroll;
+            heigh -= 3 * scroll;
+        }
 
         if (distance < 0 && heigh < 0)
         {
@@ -78,11 +79,6 @@ public class CameraController : MonoBehaviour
         if (distance > 0 || heigh > 0 && Input.GetAxisRaw("Mouse ScrollWheel") != 0)
         {
             FPW = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            InventoryOpened = !InventoryOpened;
         }
     }
 }

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public int[] slots = {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    public int MouseSlot = 0;
+    public int[] slots;
+    public int MouseSlot;
     public HandItemRenderer handItemRenderer;
 
     public void InteractSlot(int index)

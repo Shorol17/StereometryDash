@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26bb362b4dfe13e4c8033c47e8d80636, type: 3}
-  m_Name: Item0
+  m_Name: Item4
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  id: 0
-  ItemName: Nothing
-  Icon: {fileID: 21300000, guid: 9e81f1d2291050f49bab39ec9fd0bbce, type: 3}
-  ObjectHand: {fileID: 0}
-  ObjectWorld: {fileID: 0}
+  id: 4
+  ItemName: Object Spawner
+  Icon: {fileID: 21300000, guid: f30c689e1cd8caa45a28c4947f382374, type: 3}
+  ObjectHand: {fileID: 919132149155446097, guid: e4141e732178ddc49a0a2f7f825cad01, type: 3}
+  ObjectWorld: {fileID: 609276383056010699, guid: 6c61c96db5547f040af6dd99cbdbc93b, type: 3}

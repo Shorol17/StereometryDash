@@ -10,7 +10,7 @@ public class InventoryMenuController : MonoBehaviour
 
     private void Awake()
     {
-        HideMenu();
+        menuRoot.SetActive(false);
         InventoryOpened = false;
     }
 
@@ -27,7 +27,7 @@ public class InventoryMenuController : MonoBehaviour
     public void OpenMenu()
     {
         InventoryOpened = true;
-        ShowMenu();
+        menuRoot.SetActive(true);
 
         cursorLockBeforePause = Cursor.lockState;
         cursorVisibleBeforePause = Cursor.visible;
@@ -40,21 +40,9 @@ public class InventoryMenuController : MonoBehaviour
     {
         InventoryOpened = false;
         Time.timeScale = 1f;
-        HideMenu();
+        menuRoot.SetActive(false);
 
         Cursor.lockState = cursorLockBeforePause;
         Cursor.visible = cursorVisibleBeforePause;
-    }
-
-    private void ShowMenu()
-    {
-        if (menuRoot != null)
-            menuRoot.SetActive(true);
-    }
-
-    private void HideMenu()
-    {
-        if (menuRoot != null)
-            menuRoot.SetActive(false);
     }
 }

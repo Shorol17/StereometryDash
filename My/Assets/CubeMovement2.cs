@@ -1,20 +1,15 @@
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using NUnit.Framework.Internal.Execution;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CubeController2 : MonoBehaviour
 {
-    public float movespeed = 7f;
-    public float jumpforce = 6f;
-    public Transform cameraTransform;
-    public CameraController cameraController;
+    public float movespeed;
+    public float jumpforce;
+    public GameObject Camera;
     public bool NoClip = false;
     public GameObject MainCube;
-    public float Raylenght;
     public HandItemRenderer handItemRenderer;
+    public GameObject handpoint;
     public Inventory inventory;
     public ItemManager itemManager;
 
@@ -23,9 +18,6 @@ public class CubeController2 : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
-        if (cameraTransform == null && Camera.main != null)
-            cameraTransform = Camera.main.transform;
     }
 
     void SwitchNoClip(GameObject obj, bool NoClip)
@@ -63,44 +55,35 @@ public class CubeController2 : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        Vector3 canForward = Vector3.forward;
-        Vector3 canRight = Vector3.right;
-        if (cameraTransform != null)
-        {
-            canForward = cameraTransform.forward;
-            canRight = cameraTransform.right;
-        }
-        canForward.y = 0f;
-        canRight.y = 0f;
-        canForward.Normalize();
-        canRight.Normalize();
+        Vector3 move = (Camera.transform.right * x + Camera.transform.forward * z).normalized;
 
-        Vector3 move = (canRight * x + canForward * z).normalized;
-        if (!Input.GetKey(KeyCode.E))
-            transform.Translate(translation: move * movespeed * Time.deltaTime, relativeTo: Space.World);
+        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f);
+
+        if (!Input.GetKey(KeyCode.E) && hit.collider && !NoClip)
+            rb.linearVelocity += move*movespeed*Time.deltaTime;
 
         if (NoClip)
         {
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
             rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            transform.Translate(move*movespeed*Time.deltaTime, Space.World);
+
             if (Input.GetKey(KeyCode.Space))
                 {
                     transform.position += new Vector3(0, movespeed*Time.deltaTime, 0);
                 }
             if (Input.GetKey(KeyCode.LeftControl))
                 {
-                    transform.position += new Vector3(0, -movespeed*Time.deltaTime, 0);
+                    transform.position -= new Vector3(0, movespeed*Time.deltaTime, 0);
                 }
             }
         else 
         {
-            if (cameraController.FPW) Raylenght = 1f;
-            else Raylenght = 0.7f;
-            rb.constraints = RigidbodyConstraints.None;
-            if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Raylenght))
+            if (Input.GetKeyDown(KeyCode.Space) && hit.collider)
             {
                 Vector3 normal = new(hit.normal.x, hit.normal.y, hit.normal.z);
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, rb.linearVelocity.z) + normal * jumpforce;
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, rb.linearVelocity.z) + normal*jumpforce + move;
             }
         }
 
@@ -111,45 +94,37 @@ public class CubeController2 : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            movespeed = 14;
-        }
+            movespeed *= 2;
         if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            movespeed = 7;
-        }
+            movespeed /= 2;
+
         if (Input.GetKeyDown(KeyCode.G))
-        {
             handItemRenderer.DropItem();
-        }
 
         if (Input.GetMouseButtonDown(1))
-        {
-            itemManager.UseSingular();
-        }
-
+            itemManager.UseLMBdown();
         if (Input.GetMouseButtonUp(1))
-        {
-            itemManager.UseContinues();
-        }
+            itemManager.UseLMBup();
+        if (Input.GetMouseButtonDown(2))
+            itemManager.UseMMB();
 
         if (Input.GetMouseButtonDown(0))
         {
             if (inventory.MouseSlot != 0)
                 return;
-            Ray ray = new Ray(MainCube.transform.position, cameraTransform.transform.forward);
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit, 5))
+            Ray ray = new Ray(MainCube.transform.position, Camera.transform.forward);
+            RaycastHit hitpick;
+            if(Physics.Raycast(ray, out hitpick, 5))
             {
-                if (hit.collider.CompareTag("Pickable"))
+                if (hitpick.collider.CompareTag("Pickable"))
                 {
-                    WorldItem worldItem = hit.collider.GetComponent<WorldItem>();
+                    WorldItem worldItem = hitpick.collider.GetComponent<WorldItem>();
                     if(worldItem == null)
                         return;
                     int id = worldItem.itemId;
                     inventory.MouseSlot = id;
                     
-                    Destroy(hit.collider.gameObject);
+                    Destroy(hitpick.collider.gameObject);
                     handItemRenderer.Refresh();
                 }
             }
