@@ -5812,14 +5812,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeController2
   movespeed: 7
   jumpforce: 6
-  cameraTransform: {fileID: 1150997142}
-  cameraController: {fileID: 1150997144}
-  NoClip: 0
-  MainCube: {fileID: 495878684}
-  Raylenght: 0
+  Camera: {fileID: 0}
   handItemRenderer: {fileID: 1463146662}
   inventory: {fileID: 35850240}
   itemManager: {fileID: 540560347}
+  menuManager: {fileID: 0}
 --- !u!82 &495878695
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6103,9 +6100,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
   inventory: {fileID: 35850240}
-  database: {fileID: 389562408}
+  itemDatabase: {fileID: 0}
+  objectDatabase: {fileID: 0}
   Source: {fileID: 495878684}
+  BlastPoint: {fileID: 0}
   Camera: {fileID: 1150997139}
+  itemSpawnerMenu: {fileID: 0}
+  objectSpawnerMenu: {fileID: 0}
+  shootEffect: {fileID: 0}
+  PhysicsGunBeam: {fileID: 0}
 --- !u!4 &540560348
 Transform:
   m_ObjectHideFlags: 0
@@ -12202,22 +12205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1fd6fd49a8a9774bbc37406f971350d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMovement
-  target: {fileID: 495878689}
-  MainCube: {fileID: 495878684}
-  distance: 8
-  heigh: 3
-  rotatespeed: 500
-  FPW: 0
-  InventoryOpened: 0
-  FPWs:
-  - {fileID: 495878684}
-  - {fileID: 1166533376}
-  - {fileID: 2139472966}
-  - {fileID: 643377427}
-  - {fileID: 209735434}
-  - {fileID: 237012550}
-  - {fileID: 1307608431}
-  - {fileID: 1933127734}
 --- !u!1 &1166533376
 GameObject:
   m_ObjectHideFlags: 0
@@ -16864,6 +16851,7 @@ GameObject:
   - component: {fileID: 1665924822}
   - component: {fileID: 1665924821}
   - component: {fileID: 1665924823}
+  - component: {fileID: 1665924824}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -16980,6 +16968,19 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &1665924824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665924820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63adf15a54ec274090cf70463a3475b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Sun
+  TimeOf24Hours: 1200
 --- !u!1 &1668078438
 GameObject:
   m_ObjectHideFlags: 0
@@ -17471,7 +17472,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe459d0b70fd235419c7bcfc42225979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenuController
+  IsPaused: 0
   menuRoot: {fileID: 1375108422}
+  helpMenu: {fileID: 0}
 --- !u!114 &1737757703
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4110539622409895122}
   - component: {fileID: -412032393661221199}
   - component: {fileID: -1424387951736497421}
-  - component: {fileID: 8250833610229284474}
+  - component: {fileID: -8346260999775689945}
   m_Layer: 0
   m_Name: Monkey
   m_TagString: Pickable
@@ -141,7 +141,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8250833610229284474
+--- !u!114 &-8346260999775689945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 675448044619416487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5fc75a78e51e3b4eb2aabd2a64dc669, type: 3}
+  m_Script: {fileID: 11500000, guid: b20a146e3dddecc40ae57a745315be5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldItem
   itemId: 1

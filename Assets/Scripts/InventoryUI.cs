@@ -6,7 +6,6 @@ public class InventoryUI : MonoBehaviour
         public Inventory inventory;
         public ItemDatabase database;
         public Image[] slotImages;
-        public Sprite EmptySlotSprite;
 
         void Update()
         {
