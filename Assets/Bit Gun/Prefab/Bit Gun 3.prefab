@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 8455064678129350737}
   - component: {fileID: -1391351307993751661}
-  - component: {fileID: 165021433829627664}
+  - component: {fileID: -879935958556982355}
   m_Layer: 0
   m_Name: Bit Gun 3
   m_TagString: Pickable
@@ -141,7 +141,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &165021433829627664
+--- !u!114 &-879935958556982355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b20a146e3dddecc40ae57a745315be5d, type: 3}
+  m_Script: {fileID: 11500000, guid: f5fc75a78e51e3b4eb2aabd2a64dc669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldItem
   itemId: 3

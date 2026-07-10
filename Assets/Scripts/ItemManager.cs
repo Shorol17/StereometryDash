@@ -137,29 +137,35 @@ public class ItemManager : MonoBehaviour
             Rigidbody rb = selected.GetComponent<Rigidbody>();
             Collider col = selected.GetComponent<Collider>();
 
-            if (rb != null)
+            if (selected.GetComponent<Rigidbody>() != null)
+            {
                 rb.useGravity = false;
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
+            }
             col.enabled = false;
         }
     }
 
     void UsePhysicsGunUp()
     {
+        if (UsingPhysicsGun == false)
+            return;
+
         UsingPhysicsGun = false;
 
         GameObject selected = PhysicsGunSelected;
         PhysicsGunSelected = null;
 
         Rigidbody rb = selected.GetComponent<Rigidbody>();
-        Rigidbody rbs = Source.GetComponent<Rigidbody>();
         Collider col = selected.GetComponent<Collider>();
+        Rigidbody rbs = Source.GetComponent<Rigidbody>();
 
         selected.transform.SetParent(null);
-        if (rb != null)
+        if (rb != null){
             rb.useGravity = true;
             rb.linearVelocity = rbs.linearVelocity;
+        }
         col.enabled = true;
     }
 

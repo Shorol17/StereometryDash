@@ -16,7 +16,6 @@ public class InventoryMenuController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("sadasdsa");
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             if (InventoryOpened)
